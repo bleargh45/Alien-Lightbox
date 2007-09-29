@@ -1,6 +1,8 @@
 package Alien::Lightbox;
 
+###############################################################################
 # Required inclusions.
+###############################################################################
 use strict;
 use warnings;
 use Carp;
@@ -9,22 +11,42 @@ use File::Path qw(mkpath);
 use File::Find qw(find);
 use File::Basename qw(dirname);
 
+###############################################################################
 # Version number
-our $VERSION = '2.03.3';
+###############################################################################
+our $LIGHTBOX_VERSION = '2.03.3';
+our $VERSION = '2.03.3.1';
 
+###############################################################################
+# Subroutine:   version()
+###############################################################################
 # Returns the Lightbox version number.
+#
+# Not to be confused with the 'Alien::Lightbox' version number (which is the
+# version number of the Perl wrapper).
+###############################################################################
 sub version {
-    return $VERSION;
+    return $LIGHTBOX_VERSION;
 }
 
+###############################################################################
+# Subroutine:   path()
+###############################################################################
 # Returns the path to the available copy of Lightbox.
+###############################################################################
 sub path {
     my $base = $INC{'Alien/Lightbox.pm'};
     $base =~ s{\.pm$}{};
     return $base;
 }
 
-# Installs the Lightbox into the given '$destdir'.
+###############################################################################
+# Subroutine:   install($destdir)
+# Parameters:   $destdir    - Destination directory
+###############################################################################
+# Installs the Lightbox into the given '$destdir'.  Throws a fatal exception on
+# errors.
+###############################################################################
 sub install {
     my ($class, $destdir) = @_;
     if (!-d $destdir) {
@@ -77,6 +99,28 @@ Alien::Lightbox - installing and finding Lightbox JS
 =head1 DESCRIPTION
 
 Please see L<Alien> for the manifesto of the Alien namespace.
+
+=head1 METHODS
+
+=over
+
+=item version()
+
+Returns the Lightbox version number. 
+
+Not to be confused with the C<Alien::Lightbox> version number (which is the
+version number of the Perl wrapper). 
+
+=item path()
+
+Returns the path to the available copy of Lightbox. 
+
+=item install($destdir)
+
+Installs the Lightbox into the given C<$destdir>. Throws a fatal exception
+on errors. 
+
+=back
 
 =head1 AUTHOR
 

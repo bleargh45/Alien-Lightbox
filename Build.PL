@@ -7,6 +7,8 @@ MY::Build->new(
     'module_name'       => 'Alien::Lightbox',
     'license'           => 'perl',
     'dist_author'       => 'Graham TerMarsch (cpan@howlingfrog.com)',
+    'requires'          => { 'perl'             => '5.6.0',
+                           },
     'build_requires'    => { 'Archive::Zip'     => 0,
                              'Test::Exception'  => 0,
                            },
