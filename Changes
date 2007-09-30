@@ -1,8 +1,10 @@
 Revision history for Perl extension Alien::Lightbox.
 
-2.03.3.1    Fri Sep 28 16:33 PDT 2007
+2.03.3.1    Sun Sep 30 13:20 PDT 2007
     - add POD docs to Alien::Lightbox
     - added "--quiet" command line argument to "lightbox-install"
+    - changed versioning to "${Lightbox_version}.${alien_release}", so that
+      releases could be issued out of sync with upstream Lightbox2.
 
 2.03.3      Tue Jul 17 21:54 PDT 2007
     - First public version.  Installs Lightbox v2.03.3
