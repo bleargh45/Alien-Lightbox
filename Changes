@@ -1,5 +1,7 @@
 Revision history for Perl extension Alien::Lightbox.
 
+    - added POD coverage tests
+
 2.03.3.1    Sun Sep 30 13:20 PDT 2007
     - add POD docs to Alien::Lightbox
     - added "--quiet" command line argument to "lightbox-install"
