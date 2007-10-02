@@ -1,21 +1,38 @@
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More;
 use Test::Exception;
 use File::Path qw(rmtree);
 use Alien::Lightbox;
 
 my $dir = 't/eraseme';
 
-# Do an install and make sure that at least one file from each of the 'lib' and
-# 'src' directories was installed properly.
-Alien::Lightbox->install( $dir );
-foreach my $file (qw( prototype.js effects.js scriptaculous.js lightbox.js )) {
-    ok( -e "$dir/$file", "$dir/$file exists" );
+# Figure out how many tests we're going to run
+my @files = Alien::Lightbox->files();
+plan tests => 2 + scalar @files;
+
+# Clean up from any previous test run
+cleanup_old_test_run: {
+    rmtree( $dir ) if (-e $dir);
 }
 
-# Re-install into the same directory, to make sure that it doesn't choke.
-lives_ok { Alien::Lightbox->install($dir) };
+# Install, and make sure that all of the files got installed properly
+install_lightbox: {
+    Alien::Lightbox->install( $dir );
+    # make sure script.aculo.us got installed
+    ok( -e "$dir/scriptaculous.js", "script.aculo.us installed" );
+    # make sure our files got installed
+    foreach my $file (@files) {
+        ok( -e "$dir/$file", "$file exists" );
+    }
+}
 
-# Clean out the test directory
-rmtree( $dir );
+# Install on top of an existing install; shouldn't choke
+reinstall_lightbox: {
+    lives_ok { Alien::Lightbox->install($dir) };
+}
+
+# Clean up after ourselves
+cleanup: {
+    rmtree( $dir );
+}
