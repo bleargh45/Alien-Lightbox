@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use base qw(Module::Build);
 use File::Copy qw(copy);
-use Archive::Zip qw(:ERROR_CODES);
 
 sub ACTION_code {
     my $self = shift;
@@ -44,14 +43,15 @@ sub install_lightbox {
     my $self = shift;
     return if (-d $self->lightbox_target_dir());
 
+    require Archive::Zip;
     print "Installing lightbox...\n";
     my $zip = Archive::Zip->new();
-    unless ($zip->read($self->lightbox_archive()) == AZ_OK) {
+    unless ($zip->read($self->lightbox_archive()) == Archive::Zip::AZ_OK()) {
         die "unable to open Lightbox zip archive\n";
     }
     my $src = $self->lightbox_dir();
     my $dst = $self->lightbox_target_dir();
-    unless ($zip->extractTree($src,$dst) == AZ_OK) {
+    unless ($zip->extractTree($src,$dst) == Archive::Zip::AZ_OK()) {
         die "unable to extract Lightbox zip archive\n";
     }
 }
