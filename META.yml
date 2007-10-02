@@ -1,6 +1,6 @@
 ---
 name: Alien-Lightbox
-version: 2.03.3.1
+version: 2.03.3.2
 author:
   - Graham TerMarsch (cpan@howlingfrog.com)
 abstract: installing and finding Lightbox JS
@@ -16,7 +16,7 @@ build_requires:
 provides:
   Alien::Lightbox:
     file: lib/Alien/Lightbox.pm
-    version: 2.03.3.1
+    version: 2.03.3.2
 generated_by: Module::Build version 0.2805
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
