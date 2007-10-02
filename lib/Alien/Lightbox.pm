@@ -6,10 +6,12 @@ package Alien::Lightbox;
 use strict;
 use warnings;
 use Carp;
+use File::Spec;
 use File::Copy qw(copy);
 use File::Path qw(mkpath);
 use File::Find qw(find);
-use File::Basename qw(dirname);
+use File::Basename qw(basename dirname);
+use Alien::scriptaculous;
 
 ###############################################################################
 # Version number
@@ -41,6 +43,53 @@ sub path {
 }
 
 ###############################################################################
+# Subroutine:   to_blib()
+###############################################################################
+# Returns a hash containing paths to the source files to be copied, and their
+# relative destinations.
+###############################################################################
+sub to_blib {
+    my $class = shift;
+    my $path  = $class->path();
+    my %blib;
+
+    # JS/CSS files
+    my @files = qw(js/lightbox.js css/lightbox.css);
+    foreach my $file (@files) {
+        my $src = File::Spec->catfile( $path, $file );
+        $blib{$src} = basename($file);
+    }
+
+    # images
+    my $imagedir = File::Spec->catdir( $path, 'images' );
+    File::Find::find(
+        sub {
+            -f $_ && do {
+                my $dstdir = $File::Find::dir;
+                $dstdir =~ s{^$imagedir}{};
+                $dstdir =~ s{^/}{};
+                $blib{$File::Find::name} = File::Spec->catfile('lightbox', $dstdir, $_);
+            }
+        },
+        $imagedir
+        );
+
+    # return list of files to install
+    return %blib;
+}
+
+###############################################################################
+# Subroutine:   files()
+###############################################################################
+# Returns the list of files that are installed by Alien::Lightbox.
+###############################################################################
+sub files {
+    my $class = shift;
+    my %blib  = $class->to_blib();
+    return sort values %blib;
+}
+
+###############################################################################
 # Subroutine:   install($destdir)
 # Parameters:   $destdir    - Destination directory
 ###############################################################################
@@ -49,35 +98,22 @@ sub path {
 ###############################################################################
 sub install {
     my ($class, $destdir) = @_;
-    if (!-d $destdir) {
-        mkpath( [$destdir] ) || croak "can't create '$destdir'; $!";
-    }
-    my $path = $class->path();
 
-    # Install JS files
-    my @files = grep { -f $_ } glob "$path/js/*.js";
-    foreach my $file (@files) {
-        copy( $file, $destdir ) || croak "can't copy '$file' to '$destdir'; $!";
-    }
+    # install scriptaculous
+    Alien::scriptaculous->install( $destdir );
 
-    # Install CSS/image files
-    my $css_srcdir = "$path/css";
-    my $img_srcdir = "$path/images";
-    @files = ();
-    File::Find::find(
-        sub { -f $_ && push(@files, $File::Find::name) },
-        $css_srcdir,
-        $img_srcdir
-        );
-    foreach my $file (@files) {
-        my $destfile = $file;
-        $destfile =~ s{$path}{$destdir/lightbox};
-
-        my $destpath = dirname( $destfile );
-        if (!-d $destpath) {
-            mkpath( [$destpath] ) || croak "can't create '$destpath'; $!";
+    # install our files
+    my %blib = $class->to_blib();
+    while (my ($srcfile, $dest) = each %blib) {
+        # get full path to destination file
+        my $destfile = File::Spec->catfile( $destdir, $dest );
+        # create any required install directories
+        my $instdir = dirname( $destfile );
+        if (!-d $instdir) {
+            mkpath( $instdir ) || croak "can't create '$instdir'; $!";
         }
-        copy( $file, $destpath ) || croak "can't copy '$file' to '$destpath'; $!";
+        # install the file
+        copy( $srcfile, $destfile ) || croak "can't copy '$srcfile' to '$instdir'; $!";
     }
 }
 
@@ -115,6 +151,15 @@ version number of the Perl wrapper).
 
 Returns the path to the available copy of Lightbox. 
 
+=item to_blib()
+
+Returns a hash containing paths to the source files to be copied, and their
+relative destinations. 
+
+=item files()
+
+Returns the list of files that are installed by Alien::Lightbox. 
+
 =item install($destdir)
 
 Installs the Lightbox into the given C<$destdir>. Throws a fatal exception
@@ -135,6 +180,7 @@ This is free software; you can redistribute it and/or modify it under the same t
 =head1 SEE ALSO
 
 http://www.huddletogether.com/projects/lightbox2/,
+L<Alien::scriptaculous>,
 L<Alien>.
 
 =cut
