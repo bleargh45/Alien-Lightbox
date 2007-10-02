@@ -5,6 +5,8 @@ Revision history for Perl extension Alien::Lightbox.
       came bundled with Lightbox2.
     - fixed dependency on Archive::Zip; its a -build- dependency, not a
       -configuration- dependency.
+    - added "passthrough" Makefile.PL; we -NEED- to have Module::Build
+      installed, auto-generated compatibility Makefile.PLs are insufficient
 
 2.03.3.1    Sun Sep 30 13:20 PDT 2007
     - add POD docs to Alien::Lightbox
