@@ -3,10 +3,8 @@ package MY::Build;
 use strict;
 use warnings;
 use base qw(Module::Build);
-use File::Path qw(mkpath);
 use File::Copy qw(copy);
 use Archive::Zip qw(:ERROR_CODES);
-use Alien::Lightbox;
 
 sub ACTION_code {
     my $self = shift;
@@ -16,12 +14,11 @@ sub ACTION_code {
 }
 
 sub lightbox_archive {
-    return join( '', 'lightbox', Alien::Lightbox->version(), '.zip' );
+    return 'lightbox2.03.3.zip';
 }
 
 sub lightbox_dir {
     return '';
-    return join( '', 'lightbox', Alien::Lightbox->version() );
 }
 
 sub lightbox_target_dir {
