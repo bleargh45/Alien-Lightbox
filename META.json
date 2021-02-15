@@ -35,7 +35,7 @@
    "provides" : {
       "Alien::Lightbox" : {
          "file" : "lib/Alien/Lightbox.pm",
-         "version" : "v2.3.3.3"
+         "version" : "v2.3.3.4"
       }
    },
    "release_status" : "stable",
@@ -44,7 +44,7 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "v2.3.3.3",
+   "version" : "v2.3.3.4",
    "x_bugtracker" : {
       "web" : "https://github.com/bleargh45/Alien-Lightbox/issues"
    },

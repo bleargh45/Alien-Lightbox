@@ -17,13 +17,13 @@ name: Alien-Lightbox
 provides:
   Alien::Lightbox:
     file: lib/Alien/Lightbox.pm
-    version: v2.3.3.3
+    version: v2.3.3.4
 requires:
   Alien::scriptaculous: '0'
   perl: v5.6.0
 resources:
   license: http://dev.perl.org/licenses/
-version: v2.3.3.3
+version: v2.3.3.4
 x_bugtracker:
   web: https://github.com/bleargh45/Alien-Lightbox/issues
 x_deprecated: 1
