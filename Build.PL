@@ -16,4 +16,7 @@ MY::Build->new(
         'Archive::Zip'          => 0,
         'Test::Exception'       => 0,
         },
+    'meta_merge'        => {
+        'x_deprecated'          => 1,
+        },
     )->create_build_script();

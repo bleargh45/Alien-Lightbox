@@ -120,7 +120,7 @@ sub install {
 
 =head1 NAME
 
-Alien::Lightbox - installing and finding Lightbox JS
+Alien::Lightbox - (DEPRECATED) installing and finding Lightbox JS
 
 =head1 SYNOPSIS
 
@@ -132,6 +132,8 @@ Alien::Lightbox - installing and finding Lightbox JS
   Alien::Lightbox->install( $my_destination_directory );
 
 =head1 DESCRIPTION
+
+B<DEPRECATED> - DO NOT USE.
 
 Please see L<Alien> for the manifesto of the Alien namespace.
 
