@@ -24,5 +24,11 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
 version: v2.3.3.3
+x_bugtracker:
+  web: https://github.com/bleargh45/Alien-Lightbox/issues
 x_deprecated: 1
+x_repository:
+  type: git
+  url: git://github.com/bleargh45/Alien-Lightbox.git
+  web: https://github.com/bleargh45/Alien-Lightbox
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'
